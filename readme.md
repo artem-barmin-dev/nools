@@ -1528,7 +1528,7 @@ rule "my rule", {
 
 <a name="collect-modifer"></a>
 
-###Collect Modifier
+### Collect Modifier
 The 'collect' modifer results in a returned object, as such a pattern can specify collect as its 'from' source.
 The 'collect' modifer returns an array which allows cardinality reasoning (when there are more than 7 red buses).
 
