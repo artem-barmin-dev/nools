@@ -19,12 +19,12 @@ Or [download the source](https://raw.github.com/C2FO/nools/master/nools.js) ([mi
 # Usage
 
 - Flows
-  _ [Defining A Flow](#flow)
-  _ [Sessions](#session)
-  _ [Facts](#facts)
-  _ [Assert](#facts-assert)
-  _ [Retract](#facts-retract)
-  _ [Modify](#facts-modify) \* [Retrieving Facts](#get-facts)
+  - [Defining A Flow](#flow)
+  - [Sessions](#session)
+  - [Facts](#facts)
+  - [Assert](#facts-assert)
+  - [Retract](#facts-retract)
+  - [Modify](#facts-modify) \* [Retrieving Facts](#get-facts)
   - [Firing](#firing)
   - [Disposing](#disposing)
   - [Removing A Flow](#removing-flow)
