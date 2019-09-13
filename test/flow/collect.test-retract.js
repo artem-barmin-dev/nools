@@ -15,7 +15,6 @@ function Item(type, price, customer) {
 
 it.describe("collect retract", function(it) {
   it.describe("two collections + retract", function(it) {
-    debugger;
     var flow = nools.flow(
       "collect test 1",
       function(flow) {
@@ -25,22 +24,16 @@ it.describe("collect retract", function(it) {
           "rule 1",
           { salience: 10, scope: { Customer: Customer, Item: Item } },
           [
-            [Customer, "c"],
-            [
-              Array,
-              "allItems",
-              "true",
-              "from collect( item1 : Item item1.customer==c )"
-            ],
+            [Array, "allItems", "true", "from collect( item1 : Item)"],
             [
               Array,
               "filledItems",
-              "allItems.length === filledItems.length",
-              "from collect( item2 : Item item2.customer==c && item2.price>10 )"
+              "true",
+              "from collect( item2 : Item item2.price>10)"
             ]
           ],
           function(facts) {
-            console.log("called");
+            console.log("called:", facts.filledItems.length);
           }
         );
       }
@@ -52,14 +45,22 @@ it.describe("collect retract", function(it) {
         var session = flow.getSession();
         var customer = new Customer("John");
         var stroller = new Item("stroller", 50, customer);
-        var bike = new Item("bike", 11, customer);
+        var bike = new Item("bike", 12, customer);
         var car = new Item("car", 2500, customer);
+        var someOther = new Item("someOther", 12, customer);
+        session.print();
         session.assert(customer);
         session.assert(stroller);
         session.assert(bike);
+        console.log(">>>>assert good");
         session.assert(car);
-        session.match().then(function() {});
-        session.retract(customer);
+        session.match().then(function() {
+          console.log(">>>>retract");
+          session.retract(bike);
+          console.log(">>>>assert");
+          session.assert(someOther);
+          session.match().then(function() {});
+        });
       }
     );
   });
