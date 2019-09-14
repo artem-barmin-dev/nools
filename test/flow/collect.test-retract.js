@@ -14,7 +14,8 @@ function Item(type, price, customer) {
 }
 
 it.describe("collect retract", function(it) {
-  it.describe("two collections + retract", function(it) {
+  it.describe("two collections + retract + assert after", function(it) {
+    var called = 0;
     var flow = nools.flow(
       "collect test 1",
       function(flow) {
@@ -33,7 +34,13 @@ it.describe("collect retract", function(it) {
             ]
           ],
           function(facts) {
-            console.log("called:", facts.filledItems.length);
+            console.log(
+              "called:",
+              facts.filledItems.length,
+              facts.allItems.length
+            );
+            if (facts.filledItems.length == 3 && facts.allItems.length == 4)
+              called++;
           }
         );
       }
@@ -46,12 +53,13 @@ it.describe("collect retract", function(it) {
         var customer = new Customer("John");
         var stroller = new Item("stroller", 50, customer);
         var bike = new Item("bike", 12, customer);
+        var wrong = new Item("bike", 8, customer);
         var car = new Item("car", 2500, customer);
         var someOther = new Item("someOther", 12, customer);
-        session.print();
         session.assert(customer);
         session.assert(stroller);
         session.assert(bike);
+        session.assert(wrong);
         console.log(">>>>assert good");
         session.assert(car);
         session.match().then(function() {
@@ -59,7 +67,9 @@ it.describe("collect retract", function(it) {
           session.retract(bike);
           console.log(">>>>assert");
           session.assert(someOther);
-          session.match().then(function() {});
+          session.match().then(function() {
+            assert(called == 2);
+          });
         });
       }
     );

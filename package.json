@@ -54,6 +54,7 @@
   "main": "index.js",
   "scripts": {
     "test": "it -r spec",
+    "test-trace": "DEBUG_TRACE=true npx it test/flow/collect.test-retract.js",
     "create-doc": "rm -rf docs/* && coddoc -d ./lib -f multi-html"
   },
   "directories": {
